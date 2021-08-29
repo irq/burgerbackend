@@ -73,7 +73,7 @@ namespace Sion.BurgerBackend.Api.Controllers
 
         private static List<GetReviewResponse> MapReviews(List<Review> reviews)
         {
-            return reviews.Select(r => new GetReviewResponse(r.User.Username, r.TasteScore, r.TextureScore, r.VisualScore)).ToList();
+            return reviews.Select(r => new GetReviewResponse(r.Id, r.User.Username, r.TasteScore, r.TextureScore, r.VisualScore)).ToList();
         }
     }
 }
