@@ -25,6 +25,15 @@ namespace Sion.BurgerBackend.DataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Restaurant>(x =>
+            {
+                x.OwnsOne(p => p.Location, p =>
+                {
+                    p.Property(pp => pp.Latitude);
+                    p.Property(pp => pp.Longitude);
+                });
+            });
+
             modelBuilder.Entity<User>(x =>
             {
                 x.Property(p => p.Username).HasConversion(p => p.Value, p => (Username)p);
