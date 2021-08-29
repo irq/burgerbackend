@@ -61,13 +61,13 @@ namespace Sion.BurgerBackend.Api
         private static void AddTestDataToDb(BurgerBackendDbContext db)
         {
             db.Restaurants.Add(new Restaurant("Burger palace", new List<Burger>{
-                new Burger("Ultra burg"),
-                new Burger("Plant king")
+                new Burger("Ultra burg", new List<Review>()),
+                new Burger("Plant king", new List<Review>())
             }));
 
             db.Restaurants.Add(new Restaurant("Every day burger", new List<Burger>{
-                new Burger("Top bacon"),
-                new Burger("Double burn")
+                new Burger("Top bacon", new List<Review>()),
+                new Burger("Double burn", new List<Review>())
             }));
 
             db.Users.Add(new User((Username)"likeburgers92"));

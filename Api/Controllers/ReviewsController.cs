@@ -1,6 +1,6 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Sion.BurgerBackend.Api.Model;
 using Sion.BurgerBackend.BusinessLogic.Entities;
 using Sion.BurgerBackend.BusinessLogic.ValueObjects;
@@ -21,8 +21,8 @@ namespace Sion.BurgerBackend.Api.Controllers
         [HttpPost("/api/reviews")]
         public async Task<IActionResult> CreateReview(CreateReviewRequest request)
         {
-            var user = _db.Users.FirstOrDefault(x => x.Username == request.Username);
-            var burger = _db.Burgers.FirstOrDefault(x => x.Id == request.BurgerId);
+            var user = await _db.Users.FirstOrDefaultAsync(x => x.Username == request.Username);
+            var burger = await _db.Burgers.FirstOrDefaultAsync(x => x.Id == request.BurgerId);
 
             // TODO: Message to let consumer know which failed
             if (burger is null || user is null)
