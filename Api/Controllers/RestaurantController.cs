@@ -1,6 +1,5 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sion.BurgerBackend.Api.Model;
@@ -19,7 +18,6 @@ namespace Sion.BurgerBackend.Api.Controllers
         }
 
         [HttpGet("/api/restaurants")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetRestaurants()
         {
             var allRestaurants = await _db.Restaurants.Include(x => x.Burgers).ToListAsync();

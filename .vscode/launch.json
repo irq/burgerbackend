@@ -16,8 +16,6 @@
             "stopAtEntry": false,
             "env": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "AWSSDKOptions:awsProfile": "BurgerBackendApi",
-                "AWSSDKOptions:awsRegion": "eu-west-1",
             },
             "logging": {
                 "moduleLoad": false
