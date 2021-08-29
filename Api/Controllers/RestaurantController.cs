@@ -23,8 +23,8 @@ namespace Sion.BurgerBackend.Api.Controllers
             var allRestaurants = await _db.Restaurants.Include(x => x.Burgers).ToListAsync();
 
             var mappedRestaurants = allRestaurants
-                .Select(r => new GetRestaurantsResponse(r.Burgers
-                    .Select(b => new GetBurgerResponse(b.Name))
+                .Select(r => new GetRestaurantsResponse(r.Name, r.Burgers
+                    .Select(b => new GetBurgerResponse(b.Id, b.Name))
                     .ToList()));
 
             return Ok(mappedRestaurants);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -8,7 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sion.BurgerBackend.Api.Model;
 using Sion.BurgerBackend.BusinessLogic.Entities;
+using Sion.BurgerBackend.BusinessLogic.ValueObjects;
 using Sion.BurgerBackend.DataAccess;
 
 namespace Sion.BurgerBackend.Api
@@ -26,7 +29,9 @@ namespace Sion.BurgerBackend.Api
         {
             services.AddDbContext<BurgerBackendDbContext>(opt => opt.UseInMemoryDatabase("BurgerBackend"));
 
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<CreateReviewRequestValidator>());
             services.AddHealthChecks();
             services.AddHttpContextAccessor();
         }
@@ -64,6 +69,8 @@ namespace Sion.BurgerBackend.Api
                 new Burger("Top bacon"),
                 new Burger("Double burn")
             }));
+
+            db.Users.Add(new User((Username)"likeburgers92"));
 
             db.SaveChanges();
         }

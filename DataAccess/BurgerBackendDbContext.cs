@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Sion.BurgerBackend.BusinessLogic.Entities;
+using Sion.BurgerBackend.BusinessLogic.ValueObjects;
 
 namespace Sion.BurgerBackend.DataAccess
 {
@@ -7,6 +8,8 @@ namespace Sion.BurgerBackend.DataAccess
     {
         public DbSet<Restaurant> Restaurants => Set<Restaurant>();
         public DbSet<Burger> Burgers => Set<Burger>();
+        public DbSet<Review> Reviews => Set<Review>();
+        public DbSet<User> Users => Set<User>();
 
         public BurgerBackendDbContext(DbContextOptions options)
             : base(options)
@@ -18,6 +21,23 @@ namespace Sion.BurgerBackend.DataAccess
             base.OnConfiguring(optionsBuilder);
 
             optionsBuilder.UseLazyLoadingProxies();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>(x =>
+            {
+                x.Property(p => p.Username).HasConversion(p => p.Value, p => (Username)p);
+            });
+
+            modelBuilder.Entity<Review>(x =>
+            {
+                x.Property(p => p.TasteScore).HasConversion(p => p.Value, p => (Rating)p);
+                x.Property(p => p.VisualScore).HasConversion(p => p.Value, p => (Rating)p);
+                x.Property(p => p.TextureScore).HasConversion(p => p.Value, p => (Rating)p);
+            });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
