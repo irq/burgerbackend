@@ -48,10 +48,7 @@ namespace Sion.BurgerBackend.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapGet("/healthcheck", async context =>
-                {
-                    await context.Response.WriteAsync("ok");
-                });
+                endpoints.MapHealthChecks("/health");
             });
 
             var context = serviceProvider.GetService<BurgerBackendDbContext>()!;
